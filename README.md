@@ -25,6 +25,29 @@ cds import RESTAPI_CEP_Swagger.json --as cds
     }
     }
 
+### Habilitar os servicos para consumir o destination
+cf login --sso
+cf create-service xsuaa application cap_rest_service-xsuaa
+cf create-service-key cap_rest_service-xsuaa cap_rest_service-xsuaa-key
+cf create-service destination lite cap_rest_service-destination
+cf create-service-key cap_rest_service-destination cap_rest_service-destination-key
+cds bind -2 cap_rest_service-xsuaa,cap_rest_service-destination
+
+### Adicionar o serviço no .cdsrc-private.json
+      "OpenCEP.API": {
+        "kind": "rest",
+        "model": "srv/external/RESTAPI_CEP_Swagger",
+        "credentials": {
+          "destination": "OpenCEP"
+        }
+      }
+
+### Adicionar a configuração de Launch do App
+"args": [
+        "watch",
+        "--profile",
+        "hybrid"
+      ],
 
 ### Lógica para conectar no serviço
 const weatherAPI = await cds.connect.to("weatherservice");

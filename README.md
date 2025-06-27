@@ -6,6 +6,10 @@ cds import RESTAPI_CEP_Swagger.json --as cds
 ### Criar a estrutura do serviço usando Joule use o prompt
 /cap-gen-model Create a simple address data model. fields will be Postal Code Numeric with Length 8, Street, Province, State and Region, all of which should be of type string.Additionally, define the necessary validations and constraints for each field to ensure data integrity.
 
+### Adicionar o action para preenchimento do endereço no serviço
+
+action updateEndereco(postalCode: String(8)) returns Addresses;
+
 ### Criar a destination para criar o serviço
 
 ### Adicionar os parametros no package.json
@@ -50,14 +54,12 @@ cds bind -2 cap_rest_service-xsuaa,cap_rest_service-destination
       ],
 
 ### Lógica para conectar no serviço
-const weatherAPI = await cds.connect.to("weatherservice");
-        // Using template literals
-        let res = weatherAPI.tx(req).get(`/data/2.5/weather?units=metric&appid=<ApiID>&lat=${results[0].latitude}&lon=${results[0].longitude}`);
+
+	const openCEPAPI = await cds.connect.to("OpenCEP.API");
+
+	let res = openCEPAPI.tx(request).get(`/v1/15050305`);
 
         let final_data =
         res.then( async (data) => {
-            let results1 = await db.update(Location).set({temperature: data.main.temp}).where({city:city});
-            return data.main.temp;
+            return data;
          });
-        
-        return final_data;

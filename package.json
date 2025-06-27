@@ -47,7 +47,17 @@
       },
       "OpenCEP.API": {
         "kind": "rest",
-        "model": "srv/external/RESTAPI_CEP_Swagger"
+        "model": "srv/external/RESTAPI_CEP_Swagger",
+        "[production]": {
+          "credentials": {
+            "destination": "OpenCEP"
+          }
+        },
+        "[hybrid]": {
+          "credentials": {
+            "destination": "OpenCEP"
+          }
+        }
       }
     }
   },

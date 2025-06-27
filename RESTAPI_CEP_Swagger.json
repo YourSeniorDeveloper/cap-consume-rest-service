@@ -1,0 +1,92 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "OpenCEP API",
+      "description": "API para consulta de informações de um CEP brasileiro.",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://opencep.com/v1"
+      }
+    ],
+    "paths": {
+      "/{cep}": {
+        "get": {
+          "summary": "Consulta informações de um CEP",
+          "parameters": [
+            {
+              "name": "cep",
+              "in": "path",
+              "required": true,
+              "description": "CEP no formato 00000-000 ou apenas números (ex: 15050305)",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Dados do CEP encontrado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "cep": {
+                        "type": "string",
+                        "example": "15050-305"
+                      },
+                      "logradouro": {
+                        "type": "string",
+                        "example": "Rua Josina Teixeira de Carvalho"
+                      },
+                      "complemento": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "unidade": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "bairro": {
+                        "type": "string",
+                        "example": "Vila Anchieta"
+                      },
+                      "localidade": {
+                        "type": "string",
+                        "example": "São José do Rio Preto"
+                      },
+                      "uf": {
+                        "type": "string",
+                        "example": "SP"
+                      },
+                      "estado": {
+                        "type": "string",
+                        "example": "São Paulo"
+                      },
+                      "regiao": {
+                        "type": "string",
+                        "example": "Sudeste"
+                      },
+                      "ibge": {
+                        "type": "string",
+                        "example": "3549805"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "CEP inválido"
+            },
+            "404": {
+              "description": "CEP não encontrado"
+            }
+          }
+        }
+      }
+    }
+  }
+  

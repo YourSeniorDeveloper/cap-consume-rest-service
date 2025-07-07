@@ -53,6 +53,9 @@ cds bind -2 cap_rest_service-xsuaa,cap_rest_service-destination
         "hybrid"
       ],
 
+### criar a UI do app e adicionar o Action
+
+
 ### Lógica para conectar no serviço
 
 	const openCEPAPI = await cds.connect.to("OpenCEP.API");

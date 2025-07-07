@@ -5,6 +5,8 @@
 const LCAPApplicationService = require('@sap/low-code-event-handler');
 const updateendereco_Logic = require('./code/updateendereco-logic');
 const addresses_Logic_Oncreate = require('./code/addresses-logic-oncreate');
+const addresses_Logic_Draft_Before = require('./code/addresses-logic-draft-before');
+const addresses_Logic_Draft_After = require('./code/addresses-logic-draft-after');
 
 class cap_rest_serviceSrv extends LCAPApplicationService {
     async init() {
@@ -15,6 +17,14 @@ class cap_rest_serviceSrv extends LCAPApplicationService {
 
         this.on(['CREATE', 'UPDATE'], 'Addresses.drafts', async (request, next) => {
             return addresses_Logic_Oncreate(request, next);
+        });
+
+        this.before(['CREATE', 'UPDATE'], 'Addresses.drafts', async (request) => {
+            await addresses_Logic_Draft_Before(request);
+        });
+
+        this.after(['CREATE', 'UPDATE'], 'Addresses.drafts', async (results, request) => {
+            await addresses_Logic_Draft_After(results, request);
         });
 
         return super.init();

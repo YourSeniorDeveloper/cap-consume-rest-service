@@ -21,3 +21,7 @@ annotate service.Addresses with {
     region @Common.FieldControl : #ReadOnly
 };
 
+annotate service.Addresses with {
+    street @Common.FieldControl : #ReadOnly
+};
+

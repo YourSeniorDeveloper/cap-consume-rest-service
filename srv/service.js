@@ -3,15 +3,10 @@
  * @version(2.0)
  */
 const LCAPApplicationService = require('@sap/low-code-event-handler');
-const updateendereco_Logic = require('./code/updateendereco-logic');
 const addresses_Logic_Before_Insert_Update = require('./code/addresses-logic-before-insert-update');
 
 class cap_rest_serviceSrv extends LCAPApplicationService {
     async init() {
-
-        this.on('updateEndereco', async (request) => {
-            return updateendereco_Logic(request);
-        });
 
         this.before(['CREATE', 'UPDATE'], 'Addresses', async (request) => {
             await addresses_Logic_Before_Insert_Update(request);
